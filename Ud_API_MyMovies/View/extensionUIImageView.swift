@@ -19,6 +19,7 @@ import UIKit
 extension UIImageView {
     
     func load(_ size: Int, _ path: String) {
+        
         let urlString = "http://image.tmdb.org/t/p/" + "w\(size)//" + path
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { (d, _, _) in

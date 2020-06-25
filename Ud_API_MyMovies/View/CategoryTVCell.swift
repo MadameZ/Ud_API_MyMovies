@@ -12,8 +12,11 @@ class CategoryTVCell: UITableViewCell {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var movies: [Movie] = []
+    // si on le crée avec des parenthèses on créé une autre instance de viewController alors qu'on veut celle qui est existante :
+    var controller: ViewController!
     
-    func setup(_ movies: [Movie]) {
+    func setup(_ movies: [Movie], _ controller: ViewController) {
+        self.controller = controller
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.movies = movies
@@ -44,6 +47,15 @@ extension CategoryTVCell: UICollectionViewDelegate, UICollectionViewDataSource {
             
         cell.setup(movies[indexPath.item])
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let movie = movies[indexPath.item]
+        
+        // on ne peut pas faire un perform segue directement car on l'a uniquement quand on utilise notre UIViewController. Donc on créé une variable pour référencer notre UIViewController :
+        controller.performSegue(withIdentifier: "detail", sender: movie)
+        
     }
     
 

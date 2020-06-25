@@ -52,6 +52,12 @@ class ViewController: UIViewController {
         }
  
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "detail", let detail = segue.destination as? DetailViewController {
+            detail.movie = sender as? Movie
+        }
+    }
 
 
 }
@@ -69,7 +75,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let movies = moviesByCategory[indexPath.section].movies
         if let cell = tableView.dequeueReusableCell(withIdentifier: "category") as? CategoryTVCell {
-            cell.setup(movies)
+            cell.setup(movies, self)
             return cell
         }
         
